@@ -1,13 +1,13 @@
 # hiscpp
 Repository for course IT120G for student a24birho.
 
--#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-
+-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-
 
 ->> INTRODUCTION <<-
 
 The aim of this repository is to serve as a way to remotely store the files made during the course IT120G, "Grundläggande programmering med C++" by student Birk Höijer, with the acronym a24birho. Minor versions will be committed as v1.0.4, v.1.1.6, etc., whereas major versions will be committed as v2.0.0, v3.0.0, etc.
 
--#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-
+-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-
 
 ->> HOW TO RUN THE PROGRAMS IN THIS REPOSITORY <<-
 
@@ -33,7 +33,7 @@ Specific instructions will be provided here for Linux Ubuntu/Debian. Thus, they 
 You have now successfully run the program. Great job!
 
 
--#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-
+-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-
 
 
 ->> DISCLAIMER <<-
