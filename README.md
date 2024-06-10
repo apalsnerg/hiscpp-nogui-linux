@@ -25,8 +25,12 @@ Specific instructions will be provided here for Linux Ubuntu/Debian. Thus, they 
 
 5. Using your terminal, navigate to the folder into which you cloned the repo.
 
+>> Steps 6-6b are only necessary if you are trying to run an uncompiled program! <<
+
 6. Run the source file for your desired program using the command "g++ <FILENAME>" to generate a compiled program.
 6a. To use a specific name for the compiled (output) program, run "g++ <FILENAME> -o <DESIRED_FILENAME>".
+6b. If multiple files are needed for the final compiled file to work, they will be included in the main file.
+You must then include these in the compilation command like "g++ file1.cpp file2.cpp file3.cpp". 6a applies here also.
 
 7. Run the compiled program using the command "./<FILENAME>".
 
