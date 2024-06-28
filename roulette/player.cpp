@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 #include "player.h"
 using namespace std;
 
@@ -7,9 +8,14 @@ Player::Player(string playerName, int playerBalance) {
     balance = playerBalance;
 }
 
-void Player::setName(string newName) {
+void Player::promptName() {
     cout << "What is your name?" << "\n" << ">> ";
+    string newName;
     getline(cin, newName);
+    name = newName;
+}
+
+void Player::setName(string newName) {
     name = newName;
 }
 
@@ -17,9 +23,14 @@ void Player::setBalance(int newBalance) {
     balance = newBalance;
 }
 
-void Player::updateBalance(int newBalance) {
+void Player::reduceBalance(int newBalance) {
     balance -= newBalance;
 }
+
 void Player::printName() {
     cout << "Your name is " << name << "\n";
+}
+
+int Player::getBalance() {
+    return balance;
 }
