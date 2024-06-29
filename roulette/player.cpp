@@ -9,9 +9,11 @@ Player::Player(string playerName, int playerBalance) {
 }
 
 void Player::promptName() {
-    cout << "What is your name?" << "\n" << ">> ";
     string newName;
     getline(cin, newName);
+    if (newName == "" || newName == " ") {
+        name = "John Doe";
+    }
     name = newName;
 }
 
@@ -23,8 +25,12 @@ void Player::setBalance(int newBalance) {
     balance = newBalance;
 }
 
-void Player::reduceBalance(int newBalance) {
-    balance -= newBalance;
+void Player::increaseBalance(int incAmnt) {
+    balance += incAmnt;
+}
+
+void Player::reduceBalance(int rdcAmnt) {
+    balance -= rdcAmnt;
 }
 
 void Player::printName() {

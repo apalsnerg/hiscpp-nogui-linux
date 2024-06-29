@@ -16,6 +16,7 @@ string isInDozen(int playingField[3][4][3], int num, int rolled) {
     return "lose";
 }
 
+
 int main () {
     int playingField[3][4][3] = {
         {
@@ -41,6 +42,8 @@ int main () {
     int rolled = 14;
     
     cout << isInDozen(playingField, 2, rolled) << endl;
+
+
 
     return 1;
 }

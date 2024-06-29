@@ -24,3 +24,21 @@ vector<string> strSplit(string strToSplit) {
     }
     return strToSplitArray;
 }
+
+bool trueFindInt(int needle, vector<int> haystack) {
+    for (int i = 0; i < haystack.size(); i++) {
+        if (haystack[i] == needle) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool trueFindStr(string needle, vector<string> haystack) {
+    for (int i = 0; i < haystack.size(); i++) {
+        if (haystack[i] == needle) {
+            return true;
+        }
+    }
+    return false;
+}

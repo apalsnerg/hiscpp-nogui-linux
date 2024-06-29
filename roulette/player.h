@@ -10,17 +10,19 @@ class Player {
     public:
         string name;
 
-        Player(string name = "George Smith", int balance = 100);
+        Player(string name = "John Doe", int balance = 1000);
 
         void promptName();
 
-        void setName(string name);
+        void setName(string);
 
-        void setBalance(int balance);
+        void setBalance(int);
 
         int getBalance();
 
-        void reduceBalance(int balance);
+        void increaseBalance(int);
+
+        void reduceBalance(int);
 
         void printName();
     private:
