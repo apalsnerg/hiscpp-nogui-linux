@@ -6,16 +6,16 @@ using namespace std;
 
 int main() {
     Roulette roulette;
-    Player player = roulette.getPlayer();
     bool playing = true;
     roulette.intro();
-    player.promptName();
-    cout << "Welcome, " << player.name << "!" << "\n";
+    roulette.configPlayerName();
+    Player player = roulette.getPlayer();
+    cout << "Welcome, " << player.getName() << "!" << "\n";
     cout << "Your starting balance is " << player.getBalance() << "kr." << "\n" << "The allowed bets are 100kr, 350kr, and 500kr." << "\n";
     cout << "Would you like to configure these settings? (Y/n)" << "\n" << ">> ";
     string answer;
-    cin >> answer;
-    if (answer == "Y" || answer == "y") {
+    getline(cin, answer);
+    if (answer[0] == 'Y' || answer[0] == 'y') {
         roulette.configuration();
     }
 

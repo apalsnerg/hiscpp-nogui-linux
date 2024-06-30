@@ -48,6 +48,7 @@
         "xstring": "cpp",
         "xtree": "cpp",
         "xutility": "cpp",
-        "xlocale": "cpp"
+        "xlocale": "cpp",
+        "xlocnum": "cpp"
     }
 }

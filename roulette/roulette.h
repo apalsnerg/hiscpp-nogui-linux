@@ -1,8 +1,4 @@
-#ifndef ROULETTE_H
-#define ROULETTE_H
-
 #include <iostream>
-#include <map>
 #include <vector>
 #include "player.h"
 #include "util.h"
@@ -50,11 +46,15 @@ class Roulette {
         /** Prints the possible ommands */
         void printComs();
 
-        /** Allows the player to make any bet (above the minimum and not above their balance) */
+        /** Sets whether the player can make any bet or is restricted to the allowed ones */
         void betRelease();
+        void betShackle();
 
         /** Prints intro text */
         void intro();
+
+        /** Calls promptName() in the player instance */
+        void configPlayerName();
 
         /** Main game loop */
         int gameLoop();
@@ -92,6 +92,15 @@ class Roulette {
         /** Evaluates whether the player guessed whether the number would be high or low correctly */
         bool isHighOrLow(string chosenHighOrLow, int rolledNumber);
 
+        /** Evaluates whether the player guessed whether the number would be red or black correctly */
+        bool isRedOrBlack(string chosenRedOrBlack, int rolledNumber);
+
+        /** Evaluates whether the player guessed whether the number would be odd or even correctly */
+        bool isOddOrEven(string chosenOddOrEven, int rolledNumber);
+
+        /** Evaluates whether the player guessed whether the number would be in the colour the player chose */
+        bool isInColour(string chosenColour, int rolledNumber);
+
     private:
         /* List of allowed bets */
         vector<int> allowedBets = {100, 350, 500};
@@ -120,8 +129,7 @@ class Roulette {
         /** the random number that the wheel has spun */
         int rolledNumber;
 
-        /** the playing field as a 3D array */
+        /** the playing field with and without dozens */
         static int playingField[3][4][3];
+        static int playingFieldLines[12][3];
 };
-
-#endif

@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
+#include <algorithm>
 #include "player.h"
+#include "util.h"
 using namespace std;
 
 Player::Player(string playerName, int playerBalance) {
@@ -10,15 +12,21 @@ Player::Player(string playerName, int playerBalance) {
 
 void Player::promptName() {
     string newName;
+    cout << "Enter your name: " << endl << ">> ";
     getline(cin, newName);
-    if (newName == "" || newName == " ") {
-        name = "John Doe";
+    /* If the user does not enter a name or enters only spaces, set the name to "John Doe" */
+    if (newName == "" || isOnlySpaces(newName)) {
+        newName = "John Doe";
     }
     name = newName;
 }
 
 void Player::setName(string newName) {
     name = newName;
+}
+
+string Player::getName() {
+    return name;
 }
 
 void Player::setBalance(int newBalance) {
@@ -34,7 +42,7 @@ void Player::reduceBalance(int rdcAmnt) {
 }
 
 void Player::printName() {
-    cout << "Your name is " << name << "\n";
+    cout << "Your name is " << name << "." << "\n";
 }
 
 int Player::getBalance() {
