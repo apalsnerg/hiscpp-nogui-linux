@@ -1,10 +1,10 @@
 #include <iostream>
 #include <time.h>
 #include <vector>
-#include <unistd.h>
 #include <algorithm>
 #include <string>
 #include <tgmath.h>
+#include <unistd.h>
 #include "player.h"
 #include "roulette.h"
 #include "util.h"
@@ -277,7 +277,7 @@ void Roulette::showPlayingField() {
             for (int k = 0; k < 3; k++) {
                 int curNum = playingField[i][j][k];
                 cout << "| ";
-                if (curNum < 10) { // Even spacing for the single-digit numbers as compared to the double-digit ones
+                if (curNum < 10) {
                     cout << " ";
                 }
                 cout << curNum;
@@ -313,14 +313,16 @@ void Roulette::intro() {
  * @returns a vector with the result of the bet and how much the player won or lost.
  */
 vector<string> Roulette::evalSpin(string userInput) {
-    vector<string> usrInptVctr = strSplit(userInput); // A vector of strings that are the constituent words of the line the user inputted
-    
-    if (bet == 0) { // The user must issue the bet command before every spin
+    /* A vector of strings that are the constituent words of the line the user inputted */
+    vector<string> usrInptVctr = strSplit(userInput);
+    /* The user must place a bet at the start of the game */
+    if (bet == 0) {
         cout << "You need to set a bet first!" << "\n";
         return {"none", "0"};
     }
     // If we expect a qualifier after the type selection and don't receive one, e.g. with single or colour
-    if (usrInptVctr.size() < 2 && usrInptVctr[0] != "high" && usrInptVctr[0] != "low" && usrInptVctr[0] != "even" && usrInptVctr[0] != "odd") {
+    if (usrInptVctr.size() < 2 && usrInptVctr[0] != "high" && usrInptVctr[0] != "low"
+                               && usrInptVctr[0] != "even" && usrInptVctr[0] != "odd") {
         if ((usrInptVctr[0] == "colour" || usrInptVctr[0] == "color")) {
             cout << "You need to specify a colour!" << "\n";
             return {"none", "0"};
@@ -364,7 +366,8 @@ vector<string> Roulette::evalSpin(string userInput) {
     
     rolledNumber = spin();
     cout << "Spinning the wheel..." << "\n";
-    //sleep(3); // Both to simluate spinning, and to make sure the seed is not the same for each spin
+    /* Simulates physical spinning and makes sure the seed is not the same for each spin */
+    sleep(3);
 
     /*
      * Before validating every spin, we make sure to validate the number the user entered
@@ -494,7 +497,9 @@ string Roulette::evalInput(string userInput) {
         "colour",
         "color",
         "high",
-        "low"
+        "low",
+        "even",
+        "odd"
     };
 
     /* Split the user's input into a vector containing the constituent words */
@@ -749,7 +754,6 @@ int Roulette::gameLoop() {
                 player.reduceBalance(stoi(result[1]));
                 totalLosses += stoi(result[1]);
             }
-            bet = 0;
             cout << "Your new balance is: " << player.getBalance() << "kr." << "\n";
             cout << "Your total payout for this session is: "
                  << totalPayouts << "kr." << "\n";
