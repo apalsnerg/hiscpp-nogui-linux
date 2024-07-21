@@ -87,20 +87,6 @@ int Roulette::getBet() {
 }
 
 /**
- * Allows the player to override the bet protocol, meaning they can make any bet
- */
-void Roulette::betRelease() {
-    bOverrideBetProtocol = true;
-}
-
-/**
- * Re-enables the bet restriction protocol, meaning they are restricted to the allowedBets.
- */
-void Roulette::betShackle() {
-    bOverrideBetProtocol = false;
-}
-
-/**
  * Spins the wheel (generates a random number between 0 and 36)
  */
 int Roulette::spin() {
@@ -137,84 +123,6 @@ void Roulette::configPlayerName() {
     player.promptName();
 }
 
-void Roulette::configuration() {
-    cout << "Would you like to reset your name? (Y/n)" << endl << ">> ";
-    string nameRes;
-    getline(cin, nameRes);
-    if (nameRes[0] == 'Y' || nameRes[0] == 'y') {
-        player.promptName();
-    }
-    
-    cout << "Would you like to update your balance? (Y/n)" << "\n" << ">> ";
-    string balRes;
-    getline(cin, balRes);
-    if (balRes[0] == 'Y' || balRes[0] == 'y') {
-        cout << "What would you like to set your balance to?" << "\n" << ">> ";
-        string newBalance;
-        getline(cin, newBalance);
-        try {
-            int i = stoi(newBalance);
-            player.setBalance(i);
-        } catch (const invalid_argument& e) {
-            cout << "Not a valid number. Skipping." << "\n";
-        } catch (const out_of_range& e) {
-            cout << "Too large! Skipping." << "\n";
-        }
-    }
-    string betResOvr;
-    string betRes;
-    if (bOverrideBetProtocol) {
-        cout << "NOTE: Your bet settings have been reset." << "\n";
-        betShackle();
-    }
-    cout << "The allowed bets are 100kr, 350kr, and 500kr." << "\n";
-    cout << "Would you like to configure this? (Y/n)" << "\n" << ">> ";
-    getline(cin, betRes);
-    if (betRes[0] == 'Y' || betRes[0] == 'y') {
-        betRelease();
-        string configResMax;
-        cout << "Would you like to configure a maximum bet? It cannot be lower than 1. (Y/n)" << "\n" << ">> ";
-        getline(cin, configResMax);
-        if (configResMax[0] == 'Y' || configResMax[0] == 'y') {
-            cout << "Please enter a maximum bet." << "\n" << ">> ";
-            string newMaxBetStr;
-            try {
-                getline(cin, newMaxBetStr);
-                int newMaxBet = stoi(newMaxBetStr);
-                if (newMaxBet < 1) {
-                    newMaxBet = 1;
-                }
-                setMaxBet(newMaxBet);
-            } catch (const invalid_argument& e) {
-                cout << "Not a valid number. Defaulting to no maximum." << "\n";
-            } catch (const out_of_range& e) {
-                cout << "Not a valid number. Defaulting to no maximum." << "\n";
-            }
-        }
-        string configResMin;
-        cout << "Would you like to configure a minimum bet? "
-            << "It cannot be lower than 1 or higher than the maximum. (Y/n)" << endl << ">> ";
-        getline(cin, configResMin);
-        if (configResMin[0] == 'Y' || configResMin[0] == 'y') {
-            cout << "Please enter a minimum bet." << "\n" << ">> ";
-            string newMinBetStr;
-            try {
-                getline(cin, newMinBetStr);
-                int newMinBet = stoi(newMinBetStr);
-                if (newMinBet < 1 || newMinBet > maxBet || maxBet == 1) {
-                    newMinBet = 1;
-                }
-                setMinBet(newMinBet);
-            } catch (const invalid_argument& e) {
-                cout << "Not a valid number. Defaulting to 100." << "\n";
-            } catch (const out_of_range& e) {
-                cout << "Not a valid number. Defaulting to 100." << "\n";
-            }
-        }
-    }
-    cout << "Configuration complete." << "\n";
-}
-
 void Roulette::printRules() {
     cout << "This might be a lot to take in, so you might have to read it twice. Let's go!" << "\n";
     cout << "The Roulette table is divided into three dozens of four lines of three numbers, like this: " << "\n\n";
@@ -237,8 +145,9 @@ void Roulette::printComs() {
     cout << "Enter 'quit' at any time to end the game." << "\n";
     cout << "Enter 'bet' to see the possible bets, or followed by a number to set your bet. Default 1kr. " << "\n";
     cout << "Enter 'balance' to see your account balance." << "\n";
-    cout << "Enter 'settings' to configure the game." << "\n";
     cout << "Enter 'field' to see the playing field." << "\n";
+    cout << "Enter 'insert' and a number to insert that amount into your account. "
+         << "Observe that you may not deposit more than 1000kr at a time, and your balance may not exceed 5000kr." << "\n";
     cout << "-------------------------------" << "\n";
     cout << "The following are spinning commands. When you enter any of these, the wheel with spin." << "\n";
     cout << "Enter 'single' followed by a number to bet on that number. A win on single returns 35x your bet." << "\n";
@@ -485,7 +394,7 @@ vector<string> Roulette::evalSpin(string userInput) {
  *          "quit" if the user wants to quit the game, and "ok" if the validation passes as a valid spin string
  */
 string Roulette::evalInput(string userInput) {
-    /* A vector of allowed bets to check the user's input against if they didn't issue a normal command */
+    // A vector of allowed bets to check the user's input against if they didn't issue a normal command
     vector<string> validBets = {
         "single",
         "split",
@@ -539,17 +448,17 @@ string Roulette::evalInput(string userInput) {
             return "none";
         }
 
-        /* Check if the user has enough money to make the bet */
+        // Check if the user has enough money to make the bet
         if (usrBet > player.getBalance()) {
             cout << "You don't have enough money to make that bet." << "\n";
             return "none";
         }
-        /* Validate that the user didn't bet under the minimum */
+        // Validate that the user didn't bet under the minimum
         else if (bOverrideBetProtocol && stoi(usrInptVctr[1]) < 1) {
             cout << "Your bet must be at least 1kr." << "\n";
             return "none";
         }
-        /* Validate that the user didn't bet a non-allowed number if the bets are shackled*/
+        // Validate that the user didn't bet a non-allowed number if the bets are shackled
         else if (!trueFindInt(stoi(usrInptVctr[1]), allowedBets)) {
             cout << "Your bet must be either " << allowedBets[0] << "kr, " << allowedBets[1] << "kr, or " << allowedBets[2] << "kr." << "\n";
             return "none";
@@ -557,8 +466,23 @@ string Roulette::evalInput(string userInput) {
         bet = stoi(usrInptVctr[1]);
         cout << "You have placed a bet of " << bet << "kr." << "\n";
         return "none";
-    } else if (usrInptVctr[0] == "settings") {
-        configuration();
+    } else if (usrInptVctr[0] == "insert") {
+        cout << "How much would you like to insert?" << "\n" << ">> ";
+        int increaseBalanceNo;
+        try {
+            cin >> increaseBalanceNo;
+        } catch (const invalid_argument &e) {
+            cout << "You must enter a number." << "\n";
+        }
+        if (increaseBalanceNo < 0 && increaseBalanceNo > 1000) {
+            cout << "You must enter a number between 0 and 1000." << "\n";
+        } else if (player.getBalance() + increaseBalanceNo > 5000) {
+            cout << "You may not have more than 5000kr at your account at a time.";
+        } else {
+            player.increaseBalance(increaseBalanceNo);
+            cout << "You have inserted " << increaseBalanceNo << "kr." << "\n";
+            cout << "Your new balance is " << player.getBalance() << "kr." << "\n";
+        }
         return "none";
     } else if (usrInptVctr[0] == "field") {
         showPlayingField();
@@ -744,14 +668,15 @@ int Roulette::gameLoop() {
             if (result[0] == "none") {
                 continue;
             }
+            // Take the money from the player's balance
+            player.reduceBalance(stoi(result[1]));
             cout << "The number rolled was: " << rolledNumber << "\n";
             if (result[0] == "win") {
-                cout << "Hooray, " << player.getName() << "! You won! You earned " << result[1] << "kr!" << "\n";
+                cout << "Hooray, " << player.getName() << "! You won! You gained " << result[1] << "kr!" << "\n";
                 player.increaseBalance(stoi(result[1]));
                 totalPayouts += stoi(result[1]);
             } else if (result[0] == "lose") {
                 cout << "Sorry, " << player.getName() << ", you lose! You lost your bet of " << result[1] << "kr." << "\n";
-                player.reduceBalance(stoi(result[1]));
                 totalLosses += stoi(result[1]);
             }
             cout << "Your new balance is: " << player.getBalance() << "kr." << "\n";
