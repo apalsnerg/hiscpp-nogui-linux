@@ -72,11 +72,13 @@ int promptBet(int (*allowedBets)[3], int& balance) {
                 betNumber = 0;
                 continue;
             }
+        // If the input could not be interpreted as a number
         } catch (const invalid_argument& e) {
             if (bet == "q") {
                 return 0;
             }
             cout << "Not a number! Try again." << "\n";
+            // Clear the buffer so we can get a new input and avoid an infinite loop
             cin.clear();
             cin.ignore();
             continue;
@@ -87,6 +89,7 @@ int promptBet(int (*allowedBets)[3], int& balance) {
             continue;
         }
     }
+    // Decrease the player's balance by their bet
     balance -= betNumber;
     return betNumber;
 }
@@ -134,8 +137,10 @@ void promptDeposit(int& balanceRef) {
             }
             balanceRef = depositAmount;
             break;
-        } catch (const invalid_argument& e) { // Input was not a number
-            if (depositAmountStr != "q") { // If the user enters an invalid input that was not 'q'
+            // Input was not a number
+        } catch (const invalid_argument& e) {
+            // If the user enters an invalid input that was not 'q'
+            if (depositAmountStr != "q") {
                 cout << "Not a number! Try again." << "\n";
                 // Clear the input buffer to prevent an infinite output loop
                 cin.clear();
@@ -212,7 +217,8 @@ int main() {
                 betType = "exit";
                 break;
             }
-            try { // Try to interpret the input as a number and save it in betNumber
+            // Try to interpret the input as a number and save it in betNumber
+            try {
                 betNumber = stoi(betSelection);
                 int amountOfAllowed = allowedNumbers.size();
                 // Check if the input is a valid number (an allowed bet)
@@ -297,5 +303,6 @@ int main() {
     // Print out a good-bye message and the user's withdrawn balance
     cout << "Thanks for playing!" << endl;
     cout << "Exiting and withdrawing " << balance << "kr. Good-bye!" << endl;
+    // EXIT PROGRAM
     return 0;
 }
